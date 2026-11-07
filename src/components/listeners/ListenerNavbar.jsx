@@ -1,13 +1,16 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { Bell, UserCircle } from "lucide-react";
+import useAuth from "../../hooks/useAuth";
 
 const ListenerNavbar = () => {
+  const navigate  = useNavigate();
+
   return (
     <nav className="w-full bg-[#17151D] border border-[#292530] rounded-xl px-5 py-3 flex items-center justify-between m-2">
       {/* Logo */}
       <div>
-        <h1 className="text-white text-lg font-bold tracking-tight">Musicoz</h1>
+        <h1 className="text-white text-lg font-bold tracking-tight cursor-pointer" onClick={()=>navigate("/main")}>Musicoz</h1>
       </div>
 
       {/* Navigation Links */}
@@ -28,7 +31,7 @@ const ListenerNavbar = () => {
         <NavLink
           to={"/main/favourites"}
           className={({ isActive }) => 
-            `text-sm transition-all duration-200 ${
+            ` transition-all duration-200 ${
               isActive
                 ? "text-purple-400 font-semibold"
                 : "text-gray-400 hover:text-white"

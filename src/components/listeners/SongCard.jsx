@@ -1,10 +1,37 @@
-import React from "react";
-import { Play, Heart, MoreHorizontal } from "lucide-react";
+
+import React, { useRef, useState } from "react";
+import { Play, Pause, Heart } from "lucide-react";
 
 const SongCard = ({ song }) => {
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+
+  const handlePlay = async () => {
+    try {
+      await audioRef.current.play();
+      setIsPlaying(true);
+    } catch (error) {
+      console.log("Audio playback error:", error);
+    }
+  };
+
+  const handlePause = () => {
+    audioRef.current.pause();
+    setIsPlaying(false);
+  };
+
+  const remainingTime = Math.max(0, song.duration - currentTime);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+
+    return `${minutes}:${String(seconds).padStart(2, "0")}`;
+  };
+
   return (
     <div className="bg-[#17151D] border border-[#292530] rounded-xl p-3 hover:bg-[#211E29] transition cursor-pointer group">
-
       <div className="relative">
         <img
           src={
@@ -16,8 +43,15 @@ const SongCard = ({ song }) => {
           className="w-full aspect-square object-cover rounded-lg"
         />
 
-        <button className="absolute bottom-2 right-2 bg-purple-600 p-3 rounded-full opacity-0 group-hover:opacity-100 transition">
-          <Play size={20} fill="white" />
+        <button
+          onClick={isPlaying ? handlePause : handlePlay}
+          className="absolute bottom-2 right-2 bg-purple-600 p-3 rounded-full opacity-0 group-hover:opacity-100 transition"
+        >
+          {isPlaying ? (
+            <Pause size={20} fill="white" />
+          ) : (
+            <Play size={20} fill="white" />
+          )}
         </button>
       </div>
 
@@ -31,6 +65,20 @@ const SongCard = ({ song }) => {
             <p className="text-gray-400 text-sm truncate">
               {song.user?.name}
             </p>
+
+            <audio
+              ref={audioRef}
+              src={`https://api.audius.co/v1/tracks/${song.id}/stream`}
+              onEnded={() => {
+                setIsPlaying(false);
+                setCurrentTime(0);
+              }}
+              onPause={() => setIsPlaying(false)}
+              onPlay={() => setIsPlaying(true)}
+              onTimeUpdate={(e) =>
+                setCurrentTime(e.target.currentTime)
+              }
+            />
           </div>
 
           <button className="text-gray-400 hover:text-white">
@@ -44,8 +92,7 @@ const SongCard = ({ song }) => {
           </span>
 
           <span className="text-xs text-gray-500">
-            {Math.floor(song.duration / 60)}:
-            {String(song.duration % 60).padStart(2, "0")}
+            {formatTime(remainingTime)}
           </span>
         </div>
       </div>

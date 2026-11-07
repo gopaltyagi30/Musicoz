@@ -27,10 +27,10 @@ const useAuth = () => {
       return val.email === data.email;
     });
     if (user) {
-      alert("user already exist");
+      toast.error("Email already registered !");
       return;
     }
-    alert("registered successfully !");
+    toast.success("registered successfully !");
     const arr = [...registeredUsers, data];
     setRegisteredUsers(arr);
     localStorage.setItem("registeredUsers", JSON.stringify(arr));

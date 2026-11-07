@@ -1,8 +1,16 @@
 
 import React from "react";
 import { Search } from "lucide-react";
+import { useSearchParams } from "react-router";
+import { useSearchSongs } from "./hook/listenerHooks";
 
-const HeroSection = () => {
+const HeroSection = ({setSearch,search}) => {
+  
+  
+  console.log(search);
+  
+  
+  
   return (
     <section className="bg-[#101010] text-white px-6 py-20 rounded-2xl my-6">
 
@@ -28,6 +36,8 @@ const HeroSection = () => {
           <Search className="text-gray-400 ml-4" size={21} />
 
           <input
+          value={search}
+          onChange={(e)=>setSearch(e.target.value)}
             type="text"
             placeholder="Search songs, artists, or albums..."
             className="flex-1 bg-transparent outline-none px-4 py-3 text-white placeholder-gray-500 text-sm"
