@@ -20,7 +20,7 @@ export const useTrendingSong = ()=>{
     }
 }
 export const useSearchSongs = () => {
-    const [search, setSearch] = useState(null);
+    const [search, setSearch] = useState("");
     const [debounceSearch, setDebounceSearch] = useState(null);
     useEffect(()=>{
         let timeout = setTimeout(()=>{

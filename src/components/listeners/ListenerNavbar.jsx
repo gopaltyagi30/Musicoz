@@ -60,7 +60,9 @@ const ListenerNavbar = () => {
           <Bell size={19} />
         </button>
 
-        <button className="text-purple-400 hover:text-purple-300 transition">
+        <button className="text-purple-400 hover:text-purple-300 transition"
+        onClick={()=>navigate("/main/profile")}
+        >
           <UserCircle size={20} />
         </button>
       </div>

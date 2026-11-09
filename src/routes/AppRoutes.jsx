@@ -4,7 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Favourites from "../pages/Favourites";
+import Favourites from "../components/listeners/Favourites";
 import ArtistDashboard from "../pages/ArtistDashboard";
 import AuthLayout from "../layouts/AuthLayout";
 import ListenerLayout from "../layouts/ListenerLayout";
@@ -12,7 +12,8 @@ import ListenerProtected from "./protectedRoutes/listenerProtected";
 import ArtistProtected from "./protectedRoutes/ArtistProtected";
 import ArtistLayout from "../layouts/ArtistLayout";
 import PublicProtected from "./protectedRoutes/publicProtected";
-import AboutUs from "../pages/AboutUs";
+import AboutUs from "../components/listeners/AboutUs";
+import ProfilePage from "../components/listeners/ProfilePage";
 const AppRoutes = () => {
   const router = createBrowserRouter([
     {
@@ -58,6 +59,10 @@ const AppRoutes = () => {
                 {
                   path:"about",
                   element:<AboutUs/>
+                },
+                {
+                  path: "profile",
+                  element:<ProfilePage/>
                 }
               ],
             },

@@ -1,13 +1,19 @@
 
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Play, Pause, Heart } from "lucide-react";
+import { FavouriteContext } from "../../context/FavouriteContext";
 
 const SongCard = ({ song }) => {
+  const {favourites, toggleFavourite} = useContext(FavouriteContext);
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+   const isFavorite = favourites.some(
+    (item) => item.id === song.id
+  );
 
   const handlePlay = async () => {
+    
     try {
       await audioRef.current.play();
       setIsPlaying(true);
@@ -81,9 +87,13 @@ const SongCard = ({ song }) => {
             />
           </div>
 
-          <button className="text-gray-400 hover:text-white">
-            <Heart size={18} />
-          </button>
+         <button onClick={() => toggleFavourite(song)}>
+      <Heart
+        size={20}
+        fill={isFavorite ? "#A855F7" : "none"}
+        color={isFavorite ? "#A855F7" : "white"}
+      />
+    </button>
         </div>
 
         <div className="flex justify-between items-center mt-3">
